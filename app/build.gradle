@@ -32,7 +32,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'workshop05_code.App'
+    mainClass = 'workshop05code.App'
 }
 
 tasks.named('test') {

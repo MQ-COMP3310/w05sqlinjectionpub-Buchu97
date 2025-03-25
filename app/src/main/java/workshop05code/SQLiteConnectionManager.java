@@ -17,7 +17,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class SQLiteConnectionManager {
-    //Start code logging exercise
+    // Start code logging exercise
     static {
         // must set before the Logger
         // loads logging.properties from the classpath
@@ -29,8 +29,8 @@ public class SQLiteConnectionManager {
     }
 
     private static final Logger logger = Logger.getLogger(SQLiteConnectionManager.class.getName());
-    //End code logging exercise
-    
+    // End code logging exercise
+
     private String databaseURL = "";
 
     private static final String WORDLE_DROP_TABLE_STRING = "DROP TABLE IF EXISTS wordlist;";
@@ -44,6 +44,7 @@ public class SQLiteConnectionManager {
             + " id integer PRIMARY KEY,\n"
             + " word text NOT NULL\n"
             + ");";
+
     /**
      * Set the database file name in the sqlite project to use
      *
@@ -145,10 +146,11 @@ public class SQLiteConnectionManager {
      * @return true if guess exists in the database, false otherwise
      */
     public boolean isValidWord(String guess) {
-        String sql = "SELECT count(id) as total FROM validWords WHERE word like'" + guess + "';";
+        String sql = "SELECT count(id) as total FROM validWords WHERE word like ?;";
 
         try (Connection conn = DriverManager.getConnection(databaseURL);
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, Integer.parseInt(guess));
 
             ResultSet resultRows = stmt.executeQuery();
             if (resultRows.next()) {
